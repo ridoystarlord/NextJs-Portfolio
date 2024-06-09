@@ -1,10 +1,55 @@
-import React from 'react';
+'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Mail, MapPin, Phone } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Button } from './ui/button';
+import { Form, FormControl, FormField, FormItem, FormMessage } from './ui/form';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { Button } from './ui/button';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { useToast } from './ui/use-toast';
+
+const formSchema = z.object({
+  name: z.string().min(1, {
+    message: 'Name must be at least 1 characters.',
+  }),
+  email: z.string().min(1, {
+    message: 'Email must be at least 1 characters.',
+  }),
+  phone: z.string().min(1, {
+    message: 'Phone must be at least 1 characters.',
+  }),
+  subject: z.string().min(1, {
+    message: 'Subject must be at least 1 characters.',
+  }),
+  body: z.string().min(1, {
+    message: 'Body must be at least 1 characters.',
+  }),
+});
 
 export default function ContactMe() {
+  const { toast } = useToast();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      subject: '',
+      body: '',
+    },
+  });
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const res = await fetch('http://localhost:3000/api', {
+      method: 'POST',
+      body: JSON.stringify(values),
+    });
+    const result = await res.json();
+    toast({
+      title: result.message,
+    });
+    form.reset();
+  }
   return (
     <section id="contactme">
       <div className="relative bg-[#2B2D33] py-5 text-white md:py-20">
@@ -50,43 +95,110 @@ export default function ContactMe() {
               </div>
             </div>
             <div className="col-span-1 md:col-span-3">
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <Input
-                    placeholder="Your Name"
-                    className="bg-transparent py-6"
-                    placeholderSize="lg"
-                  />
-                  <Input
-                    placeholder="Your Email"
-                    className="bg-transparent py-6"
-                    placeholderSize="lg"
-                  />
-                  <Input
-                    placeholder="Your Phone"
-                    className="bg-transparent py-6"
-                    placeholderSize="lg"
-                  />
-                  <Input
-                    placeholder="Your Subject"
-                    className="bg-transparent py-6"
-                    placeholderSize="lg"
-                  />
-                  <Textarea
-                    className="col-span-1 bg-transparent md:col-span-2"
-                    placeholder="Your Message"
-                    rows={8}
-                    placeholderSize="lg"
-                  />
-                </div>
-                <Button
-                  size="lg"
-                  className="w-full rounded-2xl bg-orange-600 hover:bg-orange-500 md:w-auto"
-                  type="submit"
+              <Form {...form}>
+                <form
+                  className="space-y-6"
+                  onSubmit={form.handleSubmit(onSubmit)}
                 >
-                  Submit Now
-                </Button>
-              </form>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="Your Name"
+                              className="bg-transparent py-6"
+                              placeholderSize="lg"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="Your Email"
+                              className="bg-transparent py-6"
+                              placeholderSize="lg"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="Your Phone"
+                              className="bg-transparent py-6"
+                              placeholderSize="lg"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="subject"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="Your Subject"
+                              className="bg-transparent py-6"
+                              placeholderSize="lg"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <div className="col-span-1 bg-transparent md:col-span-2">
+                      <FormField
+                        control={form.control}
+                        name="body"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Textarea
+                                className="bg-transparent"
+                                placeholder="Your Message"
+                                rows={8}
+                                placeholderSize="lg"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                  <Button
+                    size="lg"
+                    className="w-full rounded-2xl bg-orange-600 hover:bg-orange-500 md:w-auto"
+                    type="submit"
+                  >
+                    Submit Now
+                  </Button>
+                </form>
+              </Form>
             </div>
           </div>
         </div>

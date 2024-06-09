@@ -17,8 +17,8 @@ export default function Home() {
       <HireMe />
       {/* <Services /> */}
       <Experience />
-      <Testimonials />
-      <BlogSection />
+      {/* <Testimonials />
+      <BlogSection /> */}
       <ContactMe />
     </main>
   );

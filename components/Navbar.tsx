@@ -55,7 +55,7 @@ const Navbar = () => {
           >
             Experience
           </Link>
-          <Link
+          {/* <Link
             href="/#testimonials"
             className="cursor-pointer hover:text-orange-500"
           >
@@ -63,7 +63,7 @@ const Navbar = () => {
           </Link>
           <Link href="/#blogs" className="cursor-pointer hover:text-orange-500">
             Blog
-          </Link>
+          </Link> */}
           <Link
             href="/#contactme"
             className="cursor-pointer hover:text-orange-500"
@@ -118,7 +118,7 @@ const Navbar = () => {
           >
             Experience
           </Link>
-          <Link
+          {/* <Link
             href="/#testimonials"
             className="block cursor-pointer px-2 py-1 hover:text-orange-500"
           >
@@ -129,7 +129,7 @@ const Navbar = () => {
             className="block cursor-pointer px-2 py-1 hover:text-orange-500"
           >
             Blog
-          </Link>
+          </Link> */}
           <Link
             href="/#contactme"
             className="block cursor-pointer px-2 py-1 hover:text-orange-500"

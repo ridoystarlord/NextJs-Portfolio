@@ -7,10 +7,10 @@ const Footer = () => {
       <section className="container md:px-0">
         <div className="flex flex-col items-center gap-y-2 md:flex-row md:justify-between">
           <p className="text-lg">
-            © {new Date().getFullYear()} <Link href="/">ridoy.dev.</Link> All
+            © {new Date().getFullYear()} <Link href="/">Ridoy.dev.</Link> All
             rights reserved.
           </p>
-          <div className="md:flex-end space-x-3">
+          {/* <div className="md:flex-end space-x-3">
             <Link
               href="/privacy-policy"
               className="text-gray-300 hover:text-white"
@@ -24,7 +24,7 @@ const Footer = () => {
             >
               Terms and Conditions
             </Link>
-          </div>
+          </div> */}
         </div>
       </section>
     </footer>
