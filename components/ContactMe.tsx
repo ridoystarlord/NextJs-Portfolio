@@ -40,7 +40,7 @@ export default function ContactMe() {
     },
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await fetch('http://localhost:3000/api', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api`, {
       method: 'POST',
       body: JSON.stringify(values),
     });
